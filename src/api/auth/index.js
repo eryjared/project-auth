@@ -12,7 +12,7 @@ const { model, schema } = require("../user/model");
 router.get('/', AuthController.index);
 router.post("/registerUser", AuthController.registerUser);
 router.post("/loginUser", AuthController.loginUser);
-router.post('/token', AuthController.signIn);
+router.post('/signIn', AuthController.signIn);
 
 module.exports = {
   path,

@@ -1,10 +1,10 @@
 const { jwtSecret } = require('../../config');
 const jwt = require('jsonwebtoken');
 
-const tomorrow = () => {
-  const date = new Date();
-  date.setDate(date.getDate() + 1);
-  return date;
+const thirtyMinutes = () => {
+  const myDate = new Date();
+  myDate.setDate(myDate.getDate() + (30 * 60 * 1000));
+  return myDate;
 };
 
 // >> Here is where login
@@ -13,12 +13,12 @@ const tomorrow = () => {
 const jwtSignIn = ({_id, username, firstname, lastname, email}) => {
     return jwt.sign({
       id: _id,
-      username, 
-      name: `${firstname} ${lastname}`,
-      email,
-      exp: tomorrow().getTime() / 1000,
-      iat: new Date().getTime() / 1000
-    }, jwtSecret);
+      username: username, 
+      firstname: `${firstname}`,
+      lastname: `${lastname}`,
+      email: email,
+      exp: thirtyMinutes().getTime() / 1000,
+      iat: new Date().getTime() / 1000 }, jwtSecret);
 }
 
 module.exports = {
