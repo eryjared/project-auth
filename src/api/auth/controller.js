@@ -1,6 +1,9 @@
 const AuthController = {};
 
 const { model } = require("../user/model");
+const { jwtSignIn } = require("../../services/jwt");
+const user = require("../user");
+
 const path = "/auth";
 
 // >> Here will be the
@@ -39,5 +42,15 @@ AuthController.loginUser = async (req, res) => {
         }
     });
 };
+
+AuthController.signIn = ({ body: { username, password } }, res) =>
+    model.findOne({ username }, {_v: 0, createdAt:0, updateAt: 0 })
+    .then((user) => user ? user : null)
+    .then((user) => user.validatePassword(password) ? jwtSignIn(user) : null)
+    .then((token) => res.json({
+        token: token,
+        type: 'Bearer'
+    }))
+    .catch((err) => res.status(401).json(err));
 
 module.exports = AuthController;
