@@ -7,6 +7,7 @@ const { Router } = require('express');
 const main = require('./main');
 const user = require("./user");
 const auth = require("./auth");
+const { authenticate } = require('../services/middlewares');
 
 const router = new Router()
 
@@ -15,7 +16,7 @@ const router = new Router()
 
 // A) Uncomment this line:
 router.use(main.path, main.router)
-router.use(user.path, user.router)
+router.use(user.path, authenticate, user.router)
 router.use(auth.path, auth.router)
 
 module.exports = router;
