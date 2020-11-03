@@ -1,5 +1,6 @@
 const router = require("express").Router();
 
+const { authenticate } = require("../../services/middlewares");
 const UserController = require("./controller");
 
 const path = "/users";
@@ -15,7 +16,7 @@ router.get("", async (req, res) => {
 });
 router.get("/getAll", UserController.getAll);
 router.post("/create", UserController.create);
-router.get("/me/:id", UserController.getOneUser);
+router.get("/me/:id", authenticate, UserController.getOneUser);
 router.put("/me/:id", UserController.update);
 router.delete("/me/:id", UserController.delete);
 
