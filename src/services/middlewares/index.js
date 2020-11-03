@@ -12,7 +12,9 @@ const authenticate = (req, res, next) => {
       res.status(403).json({message: "No authorization header providen"})
     console.log("AUTHO");
     console.log(authorization);
-    const token = authorization.split(' ')[1];
+    const token = authorization.split(' ')[0];
+    console.log("TOKEN");
+    console.log(token);
     if(!token)
       res.status(403).json({message: "No authorization token providen"})
 
@@ -22,7 +24,7 @@ const authenticate = (req, res, next) => {
         }else {
             console.log(user);
             req.user = user;
-            next()
+            next();
         }
     })
 }
